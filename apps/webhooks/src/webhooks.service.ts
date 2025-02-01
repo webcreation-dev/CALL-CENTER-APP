@@ -1,12 +1,9 @@
 import { Injectable, Inject, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import * as nodemailer from 'nodemailer';
-import { NotifyEmailDto } from './dto/notify-email.dto';
 import { WhatsAppInboundMessagesDto } from './dto/whatsapp-inbound-messages.dto';
 import { ClientProxy } from '@nestjs/microservices';
 import { MESSAGING_SERVICE } from '@app/common';
 import { firstValueFrom, catchError } from 'rxjs';
-import { CanalTypeEnum } from 'apps/messaging/src/enums/canal_type.enum';
 
 
 @Injectable()
@@ -20,7 +17,7 @@ export class WebhooksService {
 
     const receiveMessages = {
       phone_number: whatsAppInboundMessagesDto.From,
-      canal: CanalTypeEnum.WHATSAPP,
+      canal: "WHATSAPP",
       message: whatsAppInboundMessagesDto.Body,
       userId: 1
     }

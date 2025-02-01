@@ -21,7 +21,7 @@ services:
     env_file:
       - ./apps/messaging/.env
     ports:
-      - '3004:3004'
+      - '3006:306'
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
@@ -34,7 +34,7 @@ services:
     env_file:
       - ./apps/webhooks/.env
     ports:
-      - '3006:3006'
+      - '3004:3004'
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules

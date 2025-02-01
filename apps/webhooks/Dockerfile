@@ -1,17 +1,20 @@
-FROM node:alpine as development
+FROM node:alpine As development
 
 WORKDIR /usr/src/app
 
 COPY package.json ./
 COPY pnpm-lock.yaml ./
+COPY tsconfig.json tsconfig.json
+COPY nest-cli.json nest-cli.json
 
 RUN npm install -g pnpm
 
-RUN pnpm install
+COPY apps/webhooks apps/webhooks
+COPY libs libs
 
-COPY . .
+RUN pnpm install -r 
 
-RUN pnpm build
+RUN pnpm run build webhooks
 
 FROM node:alpine as production
 
@@ -29,4 +32,4 @@ RUN pnpm install --prod
 
 COPY --from=development /usr/src/app/dist ./dist
 
-CMD ["node", "dist/apps/webhooks/main"]
+CMD ["node", "dist/apps/webhooks/src/main"]
