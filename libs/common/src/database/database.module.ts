@@ -7,8 +7,7 @@ import { EntityClassOrSchema } from '@nestjs/typeorm/dist/interfaces/entity-clas
 @Module({
   imports: [
     EnvModule,
-    TypeOrmModule.forRootAsync(databaseConfig.asProvider()), // Connexion à la DB
-    // SeedingModule, // Ajout de SeedingModule
+    TypeOrmModule.forRootAsync(databaseConfig.asProvider()), 
   ],
 })
 export class DatabaseModule {
