@@ -29,33 +29,24 @@
 ## Installation
 
 ```bash
-$ npm install
+$ pnpm install
 ```
 
 ## Running the app
 
 ```bash
-# development
-$ npm run start
+# build images microservices
+$ docker-compose build --no-cache
 
-# watch mode
-$ npm run start:dev
+# run all miroservices in containers
+$ docker-compose up
 
-# production mode
-$ npm run start:prod
-```
+# run migrations
+$ docker ps
 
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+# excute migration inside conatainers. For example : chatapp-auth-1 is container running
+$ docker exec -it chatapp-auth-1 sh
+$ pnpm migration:run
 ```
 
 ## Support

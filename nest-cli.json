@@ -42,7 +42,19 @@
   },
   "compilerOptions": {
     "webpack": false,
-    "tsConfigPath": "apps/messaging/tsconfig.app.json"
+    "tsConfigPath": "apps/messaging/tsconfig.app.json",
+    "plugins": [{
+      "name": "@nestjs/swagger",
+      "options": {
+        "dtoFileNameSuffix": [
+          ".dto.ts",
+          ".entity.ts",
+          ".embedded.ts",
+          ".schema.ts"
+        ],
+        "introspectComments": true
+      }
+    }]
   },
   "monorepo": true,
   "root": "apps/messaging"
