@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import {
   DatabaseModule,
   PROPERTIES_SERVICE,
-  Role,
   User,
   UsualModule,
 } from '@app/common';
@@ -10,15 +9,13 @@ import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { UsersRepository } from './users.repository';
 import { UsersSubscriber } from './subscribers/users.subscriber';
-import { RolesRepository } from './roles.repository';
-import { TempUserService } from './temps/temp-user.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
     DatabaseModule,
-    DatabaseModule.forFeature([User, Role]),
+    DatabaseModule.forFeature([User]),
     UsualModule,
     ClientsModule.registerAsync([
       {
@@ -37,12 +34,10 @@ import { ConfigService } from '@nestjs/config';
   controllers: [UsersController],
   providers: [
     UsersService,
-    TempUserService,
     UsersRepository,
     UsersSubscriber,
     UsersRepository,
-    RolesRepository,
   ],
-  exports: [UsersService, UsersRepository, TempUserService, RolesRepository],
+  exports: [UsersService, UsersRepository],
 })
 export class UsersModule {}

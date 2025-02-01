@@ -8,9 +8,6 @@ import { CreateUserDto } from './users/dto/create-user.dto';
 import { RequestUser } from './interfaces/request-user.interface';
 import { UsersRepository } from './users/users.repository';
 import { GetUserDto } from './users/dto/get-user.dto';
-import { TempUserService } from './users/temps/temp-user.service';
-import { SaveUserDto } from './users/dto/save-user-dto';
-import { toogleWishlistDto } from './users/dto/toogle-wishlist.dto';
 
 @Injectable()
 export class AuthService {
@@ -21,7 +18,6 @@ export class AuthService {
     private readonly hashingService: HashingService,
     private readonly usersRepository: UsersRepository,
     private readonly otpService: OtpService,
-    private readonly tempUserService: TempUserService,
   ) {}
 
   async login(user: User) {
@@ -36,28 +32,7 @@ export class AuthService {
   }
 
   async register(createUserDto: CreateUserDto) {
-    const { phone } = createUserDto;
-
-    this.tempUserService.storeTempUser(phone, createUserDto);
-
-    // await this.otpService.sendOtp(phone);
-
-    return phone;
-  }
-
-  async verifyOtp(saveUserDto: SaveUserDto) {
-    const { phone, otp } = saveUserDto;
-
-    // await this.otpService.verifyOtp(otp, phone);
-
-    const tempUser = this.tempUserService.getTempUser(phone);
-    if (!tempUser) {
-      throw new UnauthorizedException(
-        'No registration process found for this phone number',
-      );
-    }
-
-    const user = await this.usersService.create(tempUser);
+    const user = await this.usersService.create(createUserDto);
     return user;
   }
 
@@ -71,12 +46,12 @@ export class AuthService {
   }
 
   async validateJwt(getUserDto: GetUserDto) {
-    return this.usersRepository.findOne(getUserDto, { roles: true });
+    return this.usersRepository.findOne(getUserDto);
   }
 
   private createRequestUser(user: User) {
-    const { id, roles } = user;
-    const requestUser: RequestUser = { id, roles };
+    const { id } = user;
+    const requestUser: RequestUser = { id };
     return requestUser;
   }
 
@@ -84,34 +59,12 @@ export class AuthService {
     const payload: TokenPayload = this.jwtService.verify(jwt);
     return this.usersRepository.findOne(
       { id: payload.userId },
-      { roles: true },
     );
   }
-
-  // async forgotPassword(forgotPasswordDto: ForgotPasswordDto) {
-  //   const { phone } = forgotPasswordDto;
-  //   await this.otpService.sendOtp(phone);
-  //   return phone;
-  // }
-
-  // async resetPassword(resetPasswordDto: ResetPasswordDto) {
-  //   const { phone, otp, password } = resetPasswordDto;
-
-  //   await this.otpService.verifyOtp(otp, phone);
-
-  //   const user = await this.usersRepository.findOne({ where: { phone } });
-  //   user.password = await this.hashingService.hash(password);
-  //   await this.usersRepository.save(user);
-
-  //   return user;
-  // }
 
   async getUser(user: User) {
     const CurrentUser = await this.usersService.getUser(user);
     return CurrentUser;
   }
 
-  async toogleWishlist(toogleWishlistDto: toogleWishlistDto) {
-    return await this.usersService.toogleWishlist(toogleWishlistDto);
-  }
 }

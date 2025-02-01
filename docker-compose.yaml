@@ -12,19 +12,6 @@ services:
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
-  properties:
-    build:
-      context: .
-      dockerfile: ./apps/properties/Dockerfile
-      target: development
-    command: pnpm run start:dev properties
-    env_file:
-      - ./apps/properties/.env
-    ports:
-      - '3006:3006'
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
   database:
     image: postgres
     restart: always
