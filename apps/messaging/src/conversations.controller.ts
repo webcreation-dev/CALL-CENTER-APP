@@ -6,10 +6,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
-  Query,
   UseGuards,
-  UsePipes,
-  ValidationPipe,
 } from '@nestjs/common';
 import { ConversationsService } from './conversations.service';
 import {
@@ -18,11 +15,12 @@ import {
   CurrentUser,
   User,
 } from '@app/common';
-import { MessagePattern, Payload } from '@nestjs/microservices';
 import { CreateConversationDto } from './dto/create-conversation.dto';
 import { CloseConversationDto } from './dto/close-conversation.dto';
 import { AnswerMessagesDto } from './dto/answer-messages.dto';
 import { ReceiveMessagesDto } from './dto/receive-messages.dto';
+import { MessagePattern, Payload } from '@nestjs/microservices';
+import { ValidationPipe, UsePipes } from '@nestjs/common';
 
 @Controller('conversations')
 export class ConversationsController {
@@ -74,24 +72,9 @@ export class ConversationsController {
   }
 
   // Receive messages from user by any canal
-  @UseGuards(JwtAuthGuard)
-  @Patch(':id/receive')
-  receiveMessages(@Param('id', ParseIntPipe) id: number, @Body() receiveMessagesDto: ReceiveMessagesDto) {
-    return this.conversationsService.receiveMessages(id, receiveMessagesDto);
+  @MessagePattern('receive_messages')
+  @UsePipes(new ValidationPipe())
+  receiveMessages(@Payload() data: { receiveMessagesDto: ReceiveMessagesDto }) {
+    return this.conversationsService.receiveMessages(data.receiveMessagesDto);
   }
-
-
-  // @MessagePattern('get_conversations')
-  // @UsePipes(new ValidationPipe())
-  // async get_conversations(@Payload() data: { conversationIds: number[] }) {
-  //   const conversations = await this.conversationsService.findMany(data.conversationIds);
-  //   return conversations;
-  // }
-
-  // @MessagePattern('get_conversation')
-  // @UsePipes(new ValidationPipe())
-  // async get_conversation(@Payload() data: { conversationId: number }) {
-  //   const conversation = await this.conversationsService.findOne(data.conversationId);
-  //   return conversation;
-  // }
 }

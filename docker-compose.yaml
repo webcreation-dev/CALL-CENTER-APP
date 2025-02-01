@@ -21,6 +21,19 @@ services:
     env_file:
       - ./apps/messaging/.env
     ports:
+      - '3004:3004'
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+  webhooks:
+    build:
+      context: .
+      dockerfile: ./apps/webhooks/Dockerfile
+      target: development
+    command: pnpm run start:dev webhooks
+    env_file:
+      - ./apps/webhooks/.env
+    ports:
       - '3006:3006'
     volumes:
       - .:/usr/src/app

@@ -60,7 +60,7 @@ let ConversationsService = class ConversationsService {
         });
         return this.messagesRepository.create(message);
     }
-    async receiveMessages(id, receiveMessagesDto) {
+    async receiveMessages(receiveMessagesDto) {
         const conversation = await this.create(receiveMessagesDto);
         const message = new message_entity_1.Message({
             ...receiveMessagesDto,

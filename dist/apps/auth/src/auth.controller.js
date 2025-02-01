@@ -43,7 +43,6 @@ let AuthController = class AuthController {
         return await this.authService.getUser(user);
     }
     async get_user(data) {
-        console.log("createConversationDto jkhjhgfhhgjkhjghfdgshfjgkh", data);
         const user = await this.usersService.findOne(data.id);
         return user;
     }

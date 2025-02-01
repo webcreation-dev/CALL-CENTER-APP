@@ -19,7 +19,8 @@ const common_2 = require("../../../libs/common/src");
 const create_conversation_dto_1 = require("./dto/create-conversation.dto");
 const close_conversation_dto_1 = require("./dto/close-conversation.dto");
 const answer_messages_dto_1 = require("./dto/answer-messages.dto");
-const receive_messages_dto_1 = require("./dto/receive-messages.dto");
+const microservices_1 = require("@nestjs/microservices");
+const common_3 = require("@nestjs/common");
 let ConversationsController = class ConversationsController {
     constructor(conversationsService) {
         this.conversationsService = conversationsService;
@@ -42,8 +43,8 @@ let ConversationsController = class ConversationsController {
     answerMessages(id, answerMessagesDto) {
         return this.conversationsService.answerMessages(id, answerMessagesDto);
     }
-    receiveMessages(id, receiveMessagesDto) {
-        return this.conversationsService.receiveMessages(id, receiveMessagesDto);
+    receiveMessages(data) {
+        return this.conversationsService.receiveMessages(data.receiveMessagesDto);
     }
 };
 __decorate([
@@ -100,12 +101,11 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ConversationsController.prototype, "answerMessages", null);
 __decorate([
-    (0, common_1.UseGuards)(common_2.JwtAuthGuard),
-    (0, common_1.Patch)(':id/receive'),
-    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
-    __param(1, (0, common_1.Body)()),
+    (0, microservices_1.MessagePattern)('receive_messages'),
+    (0, common_3.UsePipes)(new common_3.ValidationPipe()),
+    __param(0, (0, microservices_1.Payload)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, receive_messages_dto_1.ReceiveMessagesDto]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], ConversationsController.prototype, "receiveMessages", null);
 ConversationsController = __decorate([

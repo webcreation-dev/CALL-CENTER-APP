@@ -30,13 +30,13 @@
         "tsConfigPath": "apps/auth/tsconfig.app.json"
       }
     },
-    "notifications": {
+    "webhooks": {
       "type": "application",
-      "root": "apps/notifications",
+      "root": "apps/webhooks",
       "entryFile": "main",
-      "sourceRoot": "apps/notifications/src",
+      "sourceRoot": "apps/webhooks/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/notifications/tsconfig.app.json"
+        "tsConfigPath": "apps/webhooks/tsconfig.app.json"
       }
     }
   },

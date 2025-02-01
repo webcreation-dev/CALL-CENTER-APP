@@ -46,8 +46,6 @@ export class AuthController {
   @MessagePattern('get_user')
   @UsePipes(new ValidationPipe())
   async get_user(@Payload() data: { id: number }) {
-    console.log("createConversationDto jkhjhgfhhgjkhjghfdgshfjgkh", data);
-
     const user = await this.usersService.findOne(data.id);
     return user;
   }

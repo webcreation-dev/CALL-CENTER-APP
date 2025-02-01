@@ -66,6 +66,8 @@ export class ConversationsService {
 
     const conversation = await this.findOne(id);
 
+    // Logic for send message to client by canal used
+
     const message = new Message({
       ...answerMessagesDto,
       sender_type: SenderTypeEnum.COMPANY,
@@ -74,7 +76,7 @@ export class ConversationsService {
     return this.messagesRepository.create(message);
   }
 
-  async receiveMessages(id: number, receiveMessagesDto: ReceiveMessagesDto) {
+  async receiveMessages(receiveMessagesDto: ReceiveMessagesDto) {
 
     const conversation = await this.create(receiveMessagesDto);
 
