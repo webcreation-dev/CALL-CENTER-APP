@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import {
   DatabaseModule,
-  PROPERTIES_SERVICE,
+  MESSAGING_SERVICE,
   User,
   UsualModule,
 } from '@app/common';
@@ -19,12 +19,12 @@ import { ConfigService } from '@nestjs/config';
     UsualModule,
     ClientsModule.registerAsync([
       {
-        name: PROPERTIES_SERVICE,
+        name: MESSAGING_SERVICE,
         useFactory: (configService: ConfigService) => ({
           transport: Transport.TCP,
           options: {
-            host: configService.get('PROPERTIES_HOST'),
-            port: configService.get('PROPERTIES_PORT'),
+            host: configService.get('MESSAGING_HOST'),
+            port: configService.get('MESSAGING_PORT'),
           },
         }),
         inject: [ConfigService],

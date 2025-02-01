@@ -35,8 +35,8 @@ AuthModule = __decorate([
                     JWT_EXPIRATION: Joi.string().required(),
                     HTTP_PORT: Joi.number().required(),
                     TCP_PORT: Joi.number().required(),
-                    PROPERTIES_PORT: Joi.number().required(),
-                    PROPERTIES_HOST: Joi.string().required(),
+                    MESSAGING_PORT: Joi.number().required(),
+                    MESSAGING_HOST: Joi.string().required(),
                 }),
             }),
             jwt_1.JwtModule.registerAsync({
@@ -50,23 +50,12 @@ AuthModule = __decorate([
             }),
             microservices_1.ClientsModule.registerAsync([
                 {
-                    name: common_2.PAYMENTS_SERVICE,
+                    name: common_2.MESSAGING_SERVICE,
                     useFactory: (configService) => ({
                         transport: microservices_1.Transport.TCP,
                         options: {
-                            host: configService.get('PAYMENTS_HOST'),
-                            port: configService.get('PAYMENTS_PORT'),
-                        },
-                    }),
-                    inject: [config_1.ConfigService],
-                },
-                {
-                    name: common_2.RESERVATIONS_SERVICE,
-                    useFactory: (configService) => ({
-                        transport: microservices_1.Transport.TCP,
-                        options: {
-                            host: configService.get('RESERVATIONS_HOST'),
-                            port: configService.get('RESERVATIONS_PORT'),
+                            host: configService.get('MESSAGING_HOST'),
+                            port: configService.get('MESSAGING_PORT'),
                         },
                     }),
                     inject: [config_1.ConfigService],

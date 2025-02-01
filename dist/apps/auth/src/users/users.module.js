@@ -25,12 +25,12 @@ UsersModule = __decorate([
             common_2.UsualModule,
             microservices_1.ClientsModule.registerAsync([
                 {
-                    name: common_2.PROPERTIES_SERVICE,
+                    name: common_2.MESSAGING_SERVICE,
                     useFactory: (configService) => ({
                         transport: microservices_1.Transport.TCP,
                         options: {
-                            host: configService.get('PROPERTIES_HOST'),
-                            port: configService.get('PROPERTIES_PORT'),
+                            host: configService.get('MESSAGING_HOST'),
+                            port: configService.get('MESSAGING_PORT'),
                         },
                     }),
                     inject: [config_1.ConfigService],

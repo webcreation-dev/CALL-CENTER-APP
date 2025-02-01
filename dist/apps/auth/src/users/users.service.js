@@ -18,9 +18,9 @@ const common_2 = require("../../../../libs/common/src");
 const users_repository_1 = require("./users.repository");
 const microservices_1 = require("@nestjs/microservices");
 let UsersService = class UsersService {
-    constructor(usersRepository, propertiesService) {
+    constructor(usersRepository, messagingService) {
         this.usersRepository = usersRepository;
-        this.propertiesService = propertiesService;
+        this.messagingService = messagingService;
     }
     async findOne(id) {
         return this.usersRepository.findOne({ id });
@@ -36,7 +36,7 @@ let UsersService = class UsersService {
 };
 UsersService = __decorate([
     (0, common_1.Injectable)(),
-    __param(1, (0, common_1.Inject)(common_2.PROPERTIES_SERVICE)),
+    __param(1, (0, common_1.Inject)(common_2.MESSAGING_SERVICE)),
     __metadata("design:paramtypes", [users_repository_1.UsersRepository,
         microservices_1.ClientProxy])
 ], UsersService);

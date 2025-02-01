@@ -9,6 +9,7 @@ const dataSource = new typeorm_1.DataSource({
     url: process.env.DATASOURCE_URL,
     entities: [
         'dist/libs/common/src/models/*.entity.js',
+        'dist/apps/messaging/src/models/*.entity.js',
     ],
     migrations: ['dist/libs/common/src/database/migrations/*.js'],
 });

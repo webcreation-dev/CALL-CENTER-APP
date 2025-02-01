@@ -4,7 +4,7 @@ import {
 } from '@nestjs/common';
 import {
   User,
-  PROPERTIES_SERVICE,
+  MESSAGING_SERVICE,
 } from '@app/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersRepository } from './users.repository';
@@ -14,7 +14,7 @@ import { ClientProxy } from '@nestjs/microservices';
 export class UsersService {
   constructor(
     private readonly usersRepository: UsersRepository,
-    @Inject(PROPERTIES_SERVICE) private readonly propertiesService: ClientProxy,
+    @Inject(MESSAGING_SERVICE) private readonly messagingService: ClientProxy,
   ) {}
 
   async findOne(id: number) {

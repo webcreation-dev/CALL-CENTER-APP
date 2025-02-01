@@ -2,9 +2,8 @@ import { Module } from '@nestjs/common';
 import {
   HealthModule,
   LoggerModule,
+  MESSAGING_SERVICE,
   OtpModule,
-  PAYMENTS_SERVICE,
-  RESERVATIONS_SERVICE,
   UsualModule,
 } from '@app/common';
 import { JwtModule } from '@nestjs/jwt';
@@ -31,8 +30,8 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         JWT_EXPIRATION: Joi.string().required(),
         HTTP_PORT: Joi.number().required(),
         TCP_PORT: Joi.number().required(),
-        PROPERTIES_PORT: Joi.number().required(),
-        PROPERTIES_HOST: Joi.string().required(),
+        MESSAGING_PORT: Joi.number().required(),
+        MESSAGING_HOST: Joi.string().required(),
       }),
     }),
     JwtModule.registerAsync({
@@ -46,23 +45,12 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     }),
     ClientsModule.registerAsync([
       {
-        name: PAYMENTS_SERVICE,
+        name: MESSAGING_SERVICE,
         useFactory: (configService: ConfigService) => ({
           transport: Transport.TCP,
           options: {
-            host: configService.get('PAYMENTS_HOST'),
-            port: configService.get('PAYMENTS_PORT'),
-          },
-        }),
-        inject: [ConfigService],
-      },
-      {
-        name: RESERVATIONS_SERVICE,
-        useFactory: (configService: ConfigService) => ({
-          transport: Transport.TCP,
-          options: {
-            host: configService.get('RESERVATIONS_HOST'),
-            port: configService.get('RESERVATIONS_PORT'),
+            host: configService.get('MESSAGING_HOST'),
+            port: configService.get('MESSAGING_PORT'),
           },
         }),
         inject: [ConfigService],

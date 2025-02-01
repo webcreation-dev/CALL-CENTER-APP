@@ -12,6 +12,19 @@ services:
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
+  messaging:
+    build:
+      context: .
+      dockerfile: ./apps/messaging/Dockerfile
+      target: development
+    command: pnpm run start:dev messaging
+    env_file:
+      - ./apps/messaging/.env
+    ports:
+      - '3006:3006'
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
   database:
     image: postgres
     restart: always
