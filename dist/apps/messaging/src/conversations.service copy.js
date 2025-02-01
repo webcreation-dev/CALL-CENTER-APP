@@ -20,45 +20,25 @@ const conversations_repository_1 = require("./conversations.repository");
 const status_conversation_enum_1 = require("./enums/status_conversation.enum");
 const microservices_1 = require("@nestjs/microservices");
 const rxjs_1 = require("rxjs");
-const messages_repository_1 = require("./messages.repository");
-const message_entity_1 = require("./models/message.entity");
-const sender_type_enum_1 = require("./enums/sender_type.enum");
 let ConversationsService = class ConversationsService {
-    constructor(conversationsRepository, messagesRepository, authService) {
+    constructor(conversationsRepository, messagingService) {
         this.conversationsRepository = conversationsRepository;
-        this.messagesRepository = messagesRepository;
-        this.authService = authService;
+        this.messagingService = messagingService;
     }
     async findAll({ id }) {
         return this.conversationsRepository.findOne({ user_id: id });
     }
     async create(createConversationDto) {
-        const user = await (0, rxjs_1.firstValueFrom)(this.authService.send('get_user', { id: createConversationDto.user_id }).pipe((0, rxjs_1.catchError)(() => {
-            throw new common_2.NotFoundException('User not found.');
-        })));
-        let conversation;
-        try {
-            conversation = await this.conversationsRepository.findOne({ phone_number: createConversationDto.phone_number, status: status_conversation_enum_1.StatusConversationEnum.OPEN });
-            return conversation;
-        }
-        catch (error) {
-            return await this.conversationsRepository.create(new conversation_entity_1.Conversation(createConversationDto));
-        }
+        await this.messagingService
+            .send('get_user', {
+            id: createConversationDto.user_id,
+        })
+            .pipe((0, rxjs_1.map)((res) => res), (0, rxjs_1.catchError)(() => (0, rxjs_1.throwError)(() => new common_2.NotFoundException('User not found.'))));
+        const conversation = await this.conversationsRepository.create(new conversation_entity_1.Conversation(createConversationDto));
+        return conversation;
     }
     async findOne(id) {
         return this.conversationsRepository.findOne({ id });
-    }
-    async findMessages(id) {
-        return this.conversationsRepository.findOne({ id }, { messages: true });
-    }
-    async answerMessages(id, answerMessagesDto) {
-        const conversation = await this.findOne(id);
-        const message = new message_entity_1.Message({
-            ...answerMessagesDto,
-            sender_type: sender_type_enum_1.SenderTypeEnum.COMPANY,
-            conversation
-        });
-        return this.messagesRepository.create(message);
     }
     async close(id, closeConversationDto, user) {
         const conversation = await this.conversationsRepository.findOne({ id });
@@ -73,10 +53,9 @@ let ConversationsService = class ConversationsService {
 };
 ConversationsService = __decorate([
     (0, common_2.Injectable)(),
-    __param(2, (0, common_2.Inject)(common_1.AUTH_SERVICE)),
+    __param(1, (0, common_2.Inject)(common_1.MESSAGING_SERVICE)),
     __metadata("design:paramtypes", [conversations_repository_1.ConversationsRepository,
-        messages_repository_1.MessagesRepository,
         microservices_1.ClientProxy])
 ], ConversationsService);
 exports.ConversationsService = ConversationsService;
-//# sourceMappingURL=conversations.service.js.map
+//# sourceMappingURL=conversations.service%20copy.js.map

@@ -16,12 +16,13 @@ import { MessagesModule } from './messages.module';
 import { ConversationsController } from './conversations.controller';
 import { ConversationsService } from './conversations.service';
 import { ConversationsRepository } from './conversations.repository';
-import { MessagesController } from './messages.controller';
+import { MessagesRepository } from './messages.repository';
+import { Message } from './models/message.entity';
 
 @Module({
   imports: [
     DatabaseModule,
-    DatabaseModule.forFeature([Conversation]),
+    DatabaseModule.forFeature([Conversation, Message]),
     HealthModule,
     LoggerModule,
     UsualModule,
@@ -50,7 +51,7 @@ import { MessagesController } from './messages.controller';
       },
     ]),
   ],
-  controllers: [ConversationsController, MessagesController],
-  providers: [ConversationsService, ConversationsRepository],
+  controllers: [ConversationsController],
+  providers: [ConversationsService, ConversationsRepository, MessagesRepository],
 })
 export class ConversationsModule {}

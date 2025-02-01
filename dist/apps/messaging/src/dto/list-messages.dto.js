@@ -9,26 +9,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateConversationDto = void 0;
+exports.ListMessagesDto = void 0;
 const class_validator_1 = require("class-validator");
-const canal_type_enum_1 = require("../enums/canal_type.enum");
-const class_validator_2 = require("class-validator");
-class CreateConversationDto {
+class ListMessagesDto {
 }
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], CreateConversationDto.prototype, "phone_number", void 0);
-__decorate([
-    (0, class_validator_1.IsEnum)(canal_type_enum_1.CanalTypeEnum),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], CreateConversationDto.prototype, "canal", void 0);
-__decorate([
-    (0, class_validator_2.IsNumber)(),
+    (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
-], CreateConversationDto.prototype, "user_id", void 0);
-exports.CreateConversationDto = CreateConversationDto;
-//# sourceMappingURL=create-conversation.dto.js.map
+], ListMessagesDto.prototype, "conversation_id", void 0);
+exports.ListMessagesDto = ListMessagesDto;
+//# sourceMappingURL=list-messages.dto.js.map

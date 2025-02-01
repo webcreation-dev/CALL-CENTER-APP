@@ -20,9 +20,12 @@ const auth_service_1 = require("./auth.service");
 const jwt_auth_guard_1 = require("./guards/jwt-auth.guard");
 const local_auth_guard_1 = require("./guards/local-auth.guard");
 const create_user_dto_1 = require("./users/dto/create-user.dto");
+const common_3 = require("@nestjs/common");
+const users_service_1 = require("./users/users.service");
 let AuthController = class AuthController {
-    constructor(authService) {
+    constructor(authService, usersService) {
         this.authService = authService;
+        this.usersService = usersService;
     }
     async login(user) {
         const jwt = await this.authService.login(user);
@@ -38,6 +41,11 @@ let AuthController = class AuthController {
     }
     async getUser(user) {
         return await this.authService.getUser(user);
+    }
+    async get_user(data) {
+        console.log("createConversationDto jkhjhgfhhgjkhjghfdgshfjgkh", data);
+        const user = await this.usersService.findOne(data.id);
+        return user;
     }
 };
 __decorate([
@@ -70,9 +78,17 @@ __decorate([
     __metadata("design:paramtypes", [common_2.User]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "getUser", null);
+__decorate([
+    (0, microservices_1.MessagePattern)('get_user'),
+    (0, common_3.UsePipes)(new common_3.ValidationPipe()),
+    __param(0, (0, microservices_1.Payload)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "get_user", null);
 AuthController = __decorate([
     (0, common_1.Controller)('auth'),
-    __metadata("design:paramtypes", [auth_service_1.AuthService])
+    __metadata("design:paramtypes", [auth_service_1.AuthService, users_service_1.UsersService])
 ], AuthController);
 exports.AuthController = AuthController;
 //# sourceMappingURL=auth.controller.js.map

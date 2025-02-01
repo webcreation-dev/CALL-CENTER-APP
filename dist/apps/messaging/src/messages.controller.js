@@ -14,25 +14,22 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MessagesController = void 0;
 const common_1 = require("@nestjs/common");
-const conversations_service_1 = require("./conversations.service");
 const common_2 = require("../../../libs/common/src");
 const create_conversation_dto_1 = require("./dto/create-conversation.dto");
-const close_conversation_dto_1 = require("./dto/close-conversation.dto");
+const list_messages_dto_1 = require("./dto/list-messages.dto");
+const messages_service_1 = require("./messages.service");
 let MessagesController = class MessagesController {
-    constructor(conversationsService) {
-        this.conversationsService = conversationsService;
+    constructor(messagesService) {
+        this.messagesService = messagesService;
     }
     create(createConversationDto, user) {
-        return this.conversationsService.create(createConversationDto, user);
+        return this.conversationsService.create(createConversationDto);
     }
-    findAll(user) {
-        return this.conversationsService.findAll(user);
+    findAll(listMessagesDto) {
+        return this.messagesService.findAll(listMessagesDto);
     }
     findOne(id) {
         return this.conversationsService.findOne(id);
-    }
-    close({ id }, closeConversationDto) {
-        return this.conversationsService.close(id, closeConversationDto);
     }
 };
 __decorate([
@@ -48,7 +45,7 @@ __decorate([
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [common_2.User]),
+    __metadata("design:paramtypes", [list_messages_dto_1.ListMessagesDto]),
     __metadata("design:returntype", void 0)
 ], MessagesController.prototype, "findAll", null);
 __decorate([
@@ -58,17 +55,9 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], MessagesController.prototype, "findOne", null);
-__decorate([
-    (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)()),
-    __param(1, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [common_2.IdDto, close_conversation_dto_1.CloseConversationDto]),
-    __metadata("design:returntype", void 0)
-], MessagesController.prototype, "close", null);
 MessagesController = __decorate([
     (0, common_1.Controller)('messages'),
-    __metadata("design:paramtypes", [conversations_service_1.ConversationsService])
+    __metadata("design:paramtypes", [messages_service_1.MessagesService])
 ], MessagesController);
 exports.MessagesController = MessagesController;
 //# sourceMappingURL=messages.controller.js.map

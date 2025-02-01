@@ -4,6 +4,7 @@ import {
   IsString,
 } from 'class-validator';
 import { CanalTypeEnum } from '../enums/canal_type.enum';
+import { IsNumber } from 'class-validator';
 
 export class CreateConversationDto {
   @IsString()
@@ -14,7 +15,7 @@ export class CreateConversationDto {
   @IsNotEmpty()
   canal: CanalTypeEnum;
 
-  @IsString()
+  @IsNumber()
   @IsNotEmpty()
-  message: string;
+  user_id: number;
 }

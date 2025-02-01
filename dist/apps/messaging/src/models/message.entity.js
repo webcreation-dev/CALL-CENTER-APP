@@ -18,10 +18,6 @@ const status_message_enum_1 = require("../enums/status_message.enum");
 let Message = class Message extends common_1.AbstractEntity {
 };
 __decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], Message.prototype, "url", void 0);
-__decorate([
     (0, typeorm_1.Column)({
         type: 'enum',
         enum: sender_type_enum_1.SenderTypeEnum,

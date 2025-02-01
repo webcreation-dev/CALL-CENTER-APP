@@ -21,6 +21,7 @@ import {
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { CreateConversationDto } from './dto/create-conversation.dto';
 import { CloseConversationDto } from './dto/close-conversation.dto';
+import { AnswerMessagesDto } from './dto/answer-messages.dto';
 
 @Controller('conversations')
 export class ConversationsController {
@@ -30,26 +31,39 @@ export class ConversationsController {
   @Post()
   create(
     @Body() createConversationDto: CreateConversationDto,
-    @CurrentUser()
-    user: User,
+    @CurrentUser() user: User,
   ) {
-    return this.conversationsService.create(createConversationDto, user);
+    return this.conversationsService.create(createConversationDto);
   }
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  findAll(user: User,) {
+  findAll(user: User) {
     return this.conversationsService.findAll(user);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.conversationsService.findOne(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
-  close(@Param('id', ParseIntPipe) id: number, @Body() closeConversationDto: CloseConversationDto) {
-    return this.conversationsService.close(id, closeConversationDto);
+  close(@Param('id', ParseIntPipe) id: number, @Body() closeConversationDto: CloseConversationDto, user: User) {
+    return this.conversationsService.close(id, closeConversationDto, user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch(':id/messages')
+  findMessages(@Param('id', ParseIntPipe) id: number) {
+    return this.conversationsService.findMessages(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch(':id/answer')
+  answerMessages(@Param('id', ParseIntPipe) id: number, answerMessagesDto: AnswerMessagesDto) {
+    return this.conversationsService.answerMessages(id, answerMessagesDto);
   }
 
 

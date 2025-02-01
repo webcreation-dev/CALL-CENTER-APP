@@ -11,10 +11,12 @@ import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { CreateUserDto } from './users/dto/create-user.dto';
+import { UsePipes, ValidationPipe } from '@nestjs/common';
+import { UsersService } from './users/users.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService, private readonly usersService : UsersService) {}
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
@@ -39,6 +41,15 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   async getUser(@CurrentUser() user: User) {
     return await this.authService.getUser(user);
+  }
+
+  @MessagePattern('get_user')
+  @UsePipes(new ValidationPipe())
+  async get_user(@Payload() data: { id: number }) {
+    console.log("createConversationDto jkhjhgfhhgjkhjghfdgshfjgkh", data);
+
+    const user = await this.usersService.findOne(data.id);
+    return user;
   }
 
 }

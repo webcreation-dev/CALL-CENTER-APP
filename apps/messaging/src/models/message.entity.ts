@@ -6,9 +6,6 @@ import { StatusMessageEnum } from '../enums/status_message.enum';
 
 @Entity()
 export class Message extends AbstractEntity<Message> {
-  @Column()
-  url: string;
-
   @Column({
     type: 'enum',
     enum: SenderTypeEnum,

@@ -17,14 +17,15 @@ const messages_module_1 = require("./messages.module");
 const conversations_controller_1 = require("./conversations.controller");
 const conversations_service_1 = require("./conversations.service");
 const conversations_repository_1 = require("./conversations.repository");
-const messages_controller_1 = require("./messages.controller");
+const messages_repository_1 = require("./messages.repository");
+const message_entity_1 = require("./models/message.entity");
 let ConversationsModule = class ConversationsModule {
 };
 ConversationsModule = __decorate([
     (0, common_1.Module)({
         imports: [
             common_2.DatabaseModule,
-            common_2.DatabaseModule.forFeature([conversation_entity_1.Conversation]),
+            common_2.DatabaseModule.forFeature([conversation_entity_1.Conversation, message_entity_1.Message]),
             common_2.HealthModule,
             common_2.LoggerModule,
             common_2.UsualModule,
@@ -53,8 +54,8 @@ ConversationsModule = __decorate([
                 },
             ]),
         ],
-        controllers: [conversations_controller_1.ConversationsController, messages_controller_1.MessagesController],
-        providers: [conversations_service_1.ConversationsService, conversations_repository_1.ConversationsRepository],
+        controllers: [conversations_controller_1.ConversationsController],
+        providers: [conversations_service_1.ConversationsService, conversations_repository_1.ConversationsRepository, messages_repository_1.MessagesRepository],
     })
 ], ConversationsModule);
 exports.ConversationsModule = ConversationsModule;

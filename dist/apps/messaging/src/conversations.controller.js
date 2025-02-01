@@ -18,12 +18,13 @@ const conversations_service_1 = require("./conversations.service");
 const common_2 = require("../../../libs/common/src");
 const create_conversation_dto_1 = require("./dto/create-conversation.dto");
 const close_conversation_dto_1 = require("./dto/close-conversation.dto");
+const answer_messages_dto_1 = require("./dto/answer-messages.dto");
 let ConversationsController = class ConversationsController {
     constructor(conversationsService) {
         this.conversationsService = conversationsService;
     }
     create(createConversationDto, user) {
-        return this.conversationsService.create(createConversationDto, user);
+        return this.conversationsService.create(createConversationDto);
     }
     findAll(user) {
         return this.conversationsService.findAll(user);
@@ -31,8 +32,14 @@ let ConversationsController = class ConversationsController {
     findOne(id) {
         return this.conversationsService.findOne(id);
     }
-    close(id, closeConversationDto) {
-        return this.conversationsService.close(id, closeConversationDto);
+    close(id, closeConversationDto, user) {
+        return this.conversationsService.close(id, closeConversationDto, user);
+    }
+    findMessages(id) {
+        return this.conversationsService.findMessages(id);
+    }
+    answerMessages(id, answerMessagesDto) {
+        return this.conversationsService.answerMessages(id, answerMessagesDto);
     }
 };
 __decorate([
@@ -53,6 +60,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ConversationsController.prototype, "findAll", null);
 __decorate([
+    (0, common_1.UseGuards)(common_2.JwtAuthGuard),
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
@@ -60,13 +68,30 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ConversationsController.prototype, "findOne", null);
 __decorate([
+    (0, common_1.UseGuards)(common_2.JwtAuthGuard),
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, close_conversation_dto_1.CloseConversationDto]),
+    __metadata("design:paramtypes", [Number, close_conversation_dto_1.CloseConversationDto, common_2.User]),
     __metadata("design:returntype", void 0)
 ], ConversationsController.prototype, "close", null);
+__decorate([
+    (0, common_1.UseGuards)(common_2.JwtAuthGuard),
+    (0, common_1.Patch)(':id/messages'),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", void 0)
+], ConversationsController.prototype, "findMessages", null);
+__decorate([
+    (0, common_1.UseGuards)(common_2.JwtAuthGuard),
+    (0, common_1.Patch)(':id/answer'),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, answer_messages_dto_1.AnswerMessagesDto]),
+    __metadata("design:returntype", void 0)
+], ConversationsController.prototype, "answerMessages", null);
 ConversationsController = __decorate([
     (0, common_1.Controller)('conversations'),
     __metadata("design:paramtypes", [conversations_service_1.ConversationsService])
