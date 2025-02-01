@@ -30,15 +30,15 @@ let ConversationsService = class ConversationsService {
         this.authService = authService;
     }
     async findAll({ id }) {
-        return this.conversationsRepository.findOne({ user_id: id });
+        return this.conversationsRepository.findMany({ user_id: id });
     }
     async create(createConversationDto) {
-        const user = await (0, rxjs_1.firstValueFrom)(this.authService.send('get_user', { id: createConversationDto.user_id }).pipe((0, rxjs_1.catchError)(() => {
+        await (0, rxjs_1.firstValueFrom)(this.authService.send('get_user', { id: createConversationDto.user_id }).pipe((0, rxjs_1.catchError)(() => {
             throw new common_2.NotFoundException('User not found.');
         })));
         let conversation;
         try {
-            conversation = await this.conversationsRepository.findOne({ phone_number: createConversationDto.phone_number, status: status_conversation_enum_1.StatusConversationEnum.OPEN });
+            conversation = await this.conversationsRepository.findOne({ phone_number: createConversationDto.phone_number, status: status_conversation_enum_1.StatusConversationEnum.OPEN, canal: createConversationDto.canal });
             return conversation;
         }
         catch (error) {
@@ -60,8 +60,20 @@ let ConversationsService = class ConversationsService {
         });
         return this.messagesRepository.create(message);
     }
+    async receiveMessages(id, receiveMessagesDto) {
+        const conversation = await this.create(receiveMessagesDto);
+        const message = new message_entity_1.Message({
+            ...receiveMessagesDto,
+            sender_type: sender_type_enum_1.SenderTypeEnum.CLIENT,
+            conversation
+        });
+        return this.messagesRepository.create(message);
+    }
     async close(id, closeConversationDto, user) {
-        const conversation = await this.conversationsRepository.findOne({ id });
+        const conversation = await this.findOne(id);
+        if (conversation.status === status_conversation_enum_1.StatusConversationEnum.CLOSED) {
+            throw new common_2.NotFoundException('Conversation already closed');
+        }
         if (conversation.user_id !== user.id) {
             throw new common_2.NotFoundException('You are not authorized to close this conversation');
         }

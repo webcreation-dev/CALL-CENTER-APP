@@ -19,6 +19,7 @@ const common_2 = require("../../../libs/common/src");
 const create_conversation_dto_1 = require("./dto/create-conversation.dto");
 const close_conversation_dto_1 = require("./dto/close-conversation.dto");
 const answer_messages_dto_1 = require("./dto/answer-messages.dto");
+const receive_messages_dto_1 = require("./dto/receive-messages.dto");
 let ConversationsController = class ConversationsController {
     constructor(conversationsService) {
         this.conversationsService = conversationsService;
@@ -41,6 +42,9 @@ let ConversationsController = class ConversationsController {
     answerMessages(id, answerMessagesDto) {
         return this.conversationsService.answerMessages(id, answerMessagesDto);
     }
+    receiveMessages(id, receiveMessagesDto) {
+        return this.conversationsService.receiveMessages(id, receiveMessagesDto);
+    }
 };
 __decorate([
     (0, common_1.UseGuards)(common_2.JwtAuthGuard),
@@ -55,6 +59,7 @@ __decorate([
 __decorate([
     (0, common_1.UseGuards)(common_2.JwtAuthGuard),
     (0, common_1.Get)(),
+    __param(0, (0, common_2.CurrentUser)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [common_2.User]),
     __metadata("design:returntype", void 0)
@@ -72,6 +77,7 @@ __decorate([
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_2.CurrentUser)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, close_conversation_dto_1.CloseConversationDto, common_2.User]),
     __metadata("design:returntype", void 0)
@@ -88,10 +94,20 @@ __decorate([
     (0, common_1.UseGuards)(common_2.JwtAuthGuard),
     (0, common_1.Patch)(':id/answer'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, answer_messages_dto_1.AnswerMessagesDto]),
     __metadata("design:returntype", void 0)
 ], ConversationsController.prototype, "answerMessages", null);
+__decorate([
+    (0, common_1.UseGuards)(common_2.JwtAuthGuard),
+    (0, common_1.Patch)(':id/receive'),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, receive_messages_dto_1.ReceiveMessagesDto]),
+    __metadata("design:returntype", void 0)
+], ConversationsController.prototype, "receiveMessages", null);
 ConversationsController = __decorate([
     (0, common_1.Controller)('conversations'),
     __metadata("design:paramtypes", [conversations_service_1.ConversationsService])

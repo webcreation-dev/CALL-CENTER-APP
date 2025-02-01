@@ -9,14 +9,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CloseConversationDto = void 0;
+exports.AnswerMessagesDto = void 0;
 const class_validator_1 = require("class-validator");
-class CloseConversationDto {
+class AnswerMessagesDto {
 }
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], CloseConversationDto.prototype, "reason", void 0);
-exports.CloseConversationDto = CloseConversationDto;
-//# sourceMappingURL=close-conversation.dto%20copy.js.map
+], AnswerMessagesDto.prototype, "message", void 0);
+exports.AnswerMessagesDto = AnswerMessagesDto;
+//# sourceMappingURL=answer-messages.dto%20copy.js.map

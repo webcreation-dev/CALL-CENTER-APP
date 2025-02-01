@@ -44,6 +44,15 @@ class AbstractRepository {
             take: options.take,
         });
     }
+    async findMany(where, options = {}) {
+        return this.itemsRepository.find({
+            where,
+            relations: options.relations,
+            order: options.order,
+            skip: options.skip,
+            take: options.take,
+        });
+    }
 }
 exports.AbstractRepository = AbstractRepository;
 //# sourceMappingURL=abstract.repository.js.map

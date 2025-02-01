@@ -81,4 +81,23 @@ export abstract class AbstractRepository<T extends AbstractEntity<T>> {
       take: options.take,
     });
   }
+
+  async findMany(
+    where: FindOptionsWhere<T>,
+    options: {
+      relations?: FindOptionsRelations<T>;
+      order?: FindOptionsOrder<T>;
+      skip?: number;
+      take?: number;
+    } = {},
+  ): Promise<T[]> {
+    return this.itemsRepository.find({
+      where,
+      relations: options.relations,
+      order: options.order,
+      skip: options.skip,
+      take: options.take,
+    });
+  }
+  
 }
