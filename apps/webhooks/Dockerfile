@@ -1,4 +1,4 @@
-FROM node:alpine As development
+FROM node:18 As development
 
 WORKDIR /usr/src/app
 
@@ -6,6 +6,9 @@ COPY package.json ./
 COPY pnpm-lock.yaml ./
 COPY tsconfig.json tsconfig.json
 COPY nest-cli.json nest-cli.json
+
+# Définir NODE_OPTIONS pour ignorer les warnings pendant le build
+ENV NODE_OPTIONS="--no-warnings"
 
 RUN npm install -g pnpm
 

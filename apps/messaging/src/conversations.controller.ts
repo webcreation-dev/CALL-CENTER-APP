@@ -10,7 +10,6 @@ import {
 } from '@nestjs/common';
 import { ConversationsService } from './conversations.service';
 import {
-  IdDto,
   JwtAuthGuard,
   CurrentUser,
   User,
