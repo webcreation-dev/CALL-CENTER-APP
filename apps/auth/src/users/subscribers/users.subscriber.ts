@@ -1,4 +1,4 @@
-import { AppTypeEnum, HashingService, User } from '@app/common';
+import { HashingService, User } from '@app/common';
 import {
   DataSource,
   EntitySubscriberInterface,

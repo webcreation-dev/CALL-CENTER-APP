@@ -9,8 +9,5 @@ exports.ENV_VALIDATION_SCHEMA = Joi.object({
     DATASOURCE_PORT: Joi.number().required(),
     DATASOURCE_DATABASE: Joi.required(),
     DATASOURCE_URL: Joi.required(),
-    OTP_API_URL: Joi.required(),
-    OTP_APP_ID: Joi.required(),
-    OTP_AUTH_KEY: Joi.required(),
 });
 //# sourceMappingURL=env.constants.js.map

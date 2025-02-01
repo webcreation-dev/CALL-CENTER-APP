@@ -1,6 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { HashingService, OtpService, User } from '@app/common';
+import { HashingService, User } from '@app/common';
 import { JwtService } from '@nestjs/jwt';
 import { TokenPayload } from './interfaces/token-payload.interface';
 import { UsersService } from './users/users.service';
@@ -17,7 +17,6 @@ export class AuthService {
     private readonly usersService: UsersService,
     private readonly hashingService: HashingService,
     private readonly usersRepository: UsersRepository,
-    private readonly otpService: OtpService,
   ) {}
 
   async login(user: User) {

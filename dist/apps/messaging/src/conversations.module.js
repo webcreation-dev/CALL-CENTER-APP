@@ -29,8 +29,6 @@ ConversationsModule = __decorate([
             common_2.HealthModule,
             common_2.LoggerModule,
             common_2.UsualModule,
-            common_2.FilesModule,
-            common_2.QueryingModule,
             messages_module_1.MessagesModule,
             config_1.ConfigModule.forRoot({
                 isGlobal: true,

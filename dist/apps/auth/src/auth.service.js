@@ -17,13 +17,12 @@ const jwt_1 = require("@nestjs/jwt");
 const users_service_1 = require("./users/users.service");
 const users_repository_1 = require("./users/users.repository");
 let AuthService = class AuthService {
-    constructor(configService, jwtService, usersService, hashingService, usersRepository, otpService) {
+    constructor(configService, jwtService, usersService, hashingService, usersRepository) {
         this.configService = configService;
         this.jwtService = jwtService;
         this.usersService = usersService;
         this.hashingService = hashingService;
         this.usersRepository = usersRepository;
-        this.otpService = otpService;
     }
     async login(user) {
         const tokenPayload = { userId: user.id };
@@ -66,8 +65,7 @@ AuthService = __decorate([
         jwt_1.JwtService,
         users_service_1.UsersService,
         common_2.HashingService,
-        users_repository_1.UsersRepository,
-        common_2.OtpService])
+        users_repository_1.UsersRepository])
 ], AuthService);
 exports.AuthService = AuthService;
 //# sourceMappingURL=auth.service.js.map

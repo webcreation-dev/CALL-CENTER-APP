@@ -3,7 +3,6 @@ import {
   HealthModule,
   LoggerModule,
   MESSAGING_SERVICE,
-  OtpModule,
   UsualModule,
 } from '@app/common';
 import { JwtModule } from '@nestjs/jwt';
@@ -21,7 +20,6 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     UsersModule,
     UsualModule,
     LoggerModule,
-    OtpModule,
     HealthModule,
     ConfigModule.forRoot({
       isGlobal: true,

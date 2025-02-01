@@ -2,10 +2,8 @@ import { Module } from '@nestjs/common';
 import {
   AUTH_SERVICE,
   DatabaseModule,
-  FilesModule,
   HealthModule,
   LoggerModule,
-  QueryingModule,
   UsualModule,
 } from '@app/common';
 import { Conversation } from './models/conversation.entity';
@@ -26,8 +24,6 @@ import { Message } from './models/message.entity';
     HealthModule,
     LoggerModule,
     UsualModule,
-    FilesModule,
-    QueryingModule,
     MessagesModule,
     ConfigModule.forRoot({
       isGlobal: true,

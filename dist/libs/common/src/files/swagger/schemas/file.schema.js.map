@@ -1,1 +1,1 @@
-{"version":3,"file":"file.schema.js","sourceRoot":"","sources":["../../../../../../../libs/common/src/files/swagger/schemas/file.schema.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,2FAA4E;AAE5E,MAAa,UAAU;CAGtB;AAFC;IAAC,IAAA,6CAAe,GAAE;;wCACQ;AAF5B,gCAGC"}
+{"version":3,"file":"file.schema.js","sourceRoot":"","sources":["../../../../../../../libs/common/src/files/swagger/schemas/file.schema.ts"],"names":[],"mappings":";;;;;;;;;;;;;AAAA,2FAA4E;AAE5E,MAAa,UAAU;CAGtB;AAFC;IAAC,IAAA,6CAAe,GAAE;kDACZ,OAAO,0BAAP,OAAO,CAAC,MAAM,mBAAC,IAAI;wCAAC;AAF5B,gCAGC"}

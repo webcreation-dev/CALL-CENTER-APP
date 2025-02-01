@@ -26,7 +26,6 @@ AuthModule = __decorate([
             users_module_1.UsersModule,
             common_2.UsualModule,
             common_2.LoggerModule,
-            common_2.OtpModule,
             common_2.HealthModule,
             config_1.ConfigModule.forRoot({
                 isGlobal: true,
