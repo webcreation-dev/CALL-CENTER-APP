@@ -1,0 +1,30 @@
+apiVersion: skaffold/v4beta11
+kind: Config
+metadata:
+  name: sleepr-microservices
+build:
+  local:
+    push: false
+  artifacts:
+    - image: auth-service
+      context: .
+      docker:
+        dockerfile: apps/auth/Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+          - src: 'package.json'
+            dest: .
+          - src: 'tsconfig.app.json'
+            dest: .
+            
+deploy:
+  helm:
+    releases:
+      - name: sleepr
+        chartPath: k8s/sleepr
+        valuesFiles:
+          - k8s/sleepr/values.yaml
+        setValues:
+          auth.image: auth-service

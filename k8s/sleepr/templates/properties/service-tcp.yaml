@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: properties
+  name: properties-tcp
+spec:
+  ports:
+    - name: 'tcp'
+      port: 3007
+      protocol: TCP
+      targetPort: 3007
+  selector:
+    app: properties
+  type: ClusterIP

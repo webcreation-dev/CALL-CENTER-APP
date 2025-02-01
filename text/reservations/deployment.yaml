@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: reservations
+  name: reservations
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reservations
+  template:
+    metadata:
+      labels:
+        app: reservations
+    spec:
+      containers:
+        - image: us-east4-docker.pkg.dev/rugged-weaver-446607-j8/reservations/production
+          name: reservations
+          env:
+            - name: DATASOURCE_USERNAME
+              value: 'postgres'
+            - name: DATASOURCE_PASSWORD
+              value: 'postgres'
+            - name: DATASOURCE_HOST
+              value: '35.245.63.204'
+            - name: DATASOURCE_PORT
+              value: '5432'
+            - name: DATASOURCE_DATABASE
+              value: 'postgres'
+            - name: DATASOURCE_URL
+              value: 'postgresql://postgres:postgres@35.245.63.204/postgres'
+
+            - name: TCP_PORT
+              value: '3004'
+            - name: HTTP_PORT
+              value: '3000'
+              
+            - name: 'AUTH_HOST'
+              value: 'auth-tcp'
+            - name: 'AUTH_PORT'
+              value: '3002'
+
+            - name: 'NOTIFICATIONS_HOST'
+              value: 'notifications'
+            - name: 'NOTIFICATIONS_PORT'
+              value: '3005'
+            - name: 'PAYMENTS_HOST'
+              value: 'payments'
+            - name: 'PAYMENTS_PORT'
+              value: '3001'
+            - name: OTP_API_URL
+              value: 'https://api.getourvoice.com/v1/otp'
+            - name: OTP_APP_ID
+              value: '64959b67-a4ef-4513-9ee9-de0d1ea11c9c'
+            - name: OTP_AUTH_KEY
+              value: '2709|vg38jyfNNTQyHh5ES99hPB15YLaRAB1wyQC51oZhPdhHXexBO7cZU8bbNwTVvTBwIhS9Aj7MVt44h2hvNVOaFVnb8CF6QQClE9461LAnncPjndHIwcjvKuzSrfXSQH25wYpBP8NXhDpTBkDKwXaKnPg2TjrGbVWEq5wiGxktTHanu86Oe6EodVmyVH6z5xrlDWUbDTXsiPWv1rLbm7siwADmp5aImJq1hSIaJBp4kSqdVnU3'
+            
+          ports:
+            - containerPort: 3000
